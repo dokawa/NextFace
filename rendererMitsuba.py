@@ -29,9 +29,9 @@ class RendererMitsuba:
                 # 'type': 'aov',
                 # 'aovs': 'dd.y:depth',
                 # 'my_image':{
-                    # 'type': 'prb'
+                    'type': 'prb'
                     # 'type': 'prb_reparam' 
-                    'type': 'direct_reparam' #supposed to be better for visibility discontinuities
+                    # 'type': 'direct_reparam' #supposed to be better for visibility discontinuities
                 # }
             },
             'sensor':  {
@@ -52,24 +52,24 @@ class RendererMitsuba:
             },
             "mesh":{
                 "type": "obj",
-                "filename": "./output/mitsuba_default/mesh0.obj",
+                "filename": "./output/mesh0.obj",
                 "face_normals": True,
                 'bsdf': {
                     'type': 'principled',
                     'base_color': {
                         'type': 'bitmap',
-                        'filename': "./output/mitsuba_default/diffuseMap_0.png"
+                        'filename': "./output/diffuseMap_0.png"
                     },                
                     'roughness':{
                         'type': 'bitmap',
-                        'filename': "./output/mitsuba_default/roughnessMap_0.png"
+                        'filename': "./output/roughnessMap_0.png"
                         
                     }
                 }
             },
             'light': {
                 'type': 'envmap',
-                'filename':'./output/mitsuba_default/envMap_0.png'
+                'filename':'./output/envMap_0.png'
             }
         })         
         # enable grad

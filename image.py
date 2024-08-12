@@ -4,7 +4,6 @@ import numpy as np
 import torch
 import cv2
 import os
-from PIL import Image
 
 def saveImage(image, fileName, gamma = 2.2):
     '''
@@ -14,9 +13,18 @@ def saveImage(image, fileName, gamma = 2.2):
     :param gamma: gamma correction
     :return:
     '''
-
-    import pyredner
-    pyredner.imwrite(image.cpu().detach(), fileName, gamma = gamma)
+    # Apply gamma correction
+    corrected_image = np.power(image.cpu().detach().numpy(), 1.0 / gamma)
+    
+    # Clip values to the range [0, 1] and scale to [0, 255]
+    corrected_image = np.clip(corrected_image * 255.0, 0, 255).astype(np.uint8)
+    
+    from PIL import Image
+    # Convert to an image object
+    img = Image.fromarray(corrected_image)
+    
+    # Save the image
+    img.save(fileName)
 
 def overlayImage(background, image):
     '''

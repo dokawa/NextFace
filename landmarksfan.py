@@ -15,7 +15,7 @@ class LandmarksDetectorFAN:
 		assert(mask.max().item() <= 67 and mask.min().item() >= 0)
 
 		self.device = device
-		self.landmarksDetector = face_alignment.FaceAlignment(face_alignment.LandmarksType._3D, flip_input=False, device=self.device)
+		self.landmarksDetector = face_alignment.FaceAlignment(face_alignment.LandmarksType.THREE_D, flip_input=False, device=self.device)
 		self.mask = mask.to(self.device)
 
 	def detect(self, images):

@@ -1,7 +1,6 @@
 import math
 from sphericalharmonics import SphericalHarmonics
 from morphablemodel import MorphableModel
-from renderer import Renderer
 from rendererMitsuba import RendererMitsuba
 from camera import Camera
 from customRenderer import *
@@ -32,8 +31,8 @@ class Pipeline:
                                              landmarksPathName=pathLandmarksAssociation,
                                              device = self.device
                                              )
-        self.renderer = Renderer(config.rtTrainingSamples, 1, self.device)
-        self.rendererMitsuba = RendererMitsuba(config.rtTrainingSamples, config.bounces, self.device, self.config.maxResolution, self.config.maxResolution) # todo get screen size from somewhere
+        # self.renderer = Renderer(config.rtTrainingSamples, 1, self.device)
+        self.renderer = RendererMitsuba(config.rtTrainingSamples, config.bounces, self.device, self.config.maxResolution, self.config.maxResolution) # todo get screen size from somewhere
         self.uvMap = self.morphableModel.uvMap.clone()
         self.uvMap[:, 1] = 1.0 - self.uvMap[:, 1]
         self.faces32 = self.morphableModel.faces.to(torch.int32).contiguous()
@@ -203,7 +202,7 @@ class Pipeline:
         assert (diffuseTextures.shape[0] == specularTextures.shape[0] == roughnessTextures.shape[0])
 
         # TODO mitsuba should generate an alpha channel to do loss only on geometry part of picture
-        img = self.rendererMitsuba.render(cameraVerts, self.faces32, normals, self.uvMap, diffuseTextures, specularTextures, torch.clamp(roughnessTextures, 1e-20, 10.0),self.vFocals[0], envMaps)
+        img = self.renderer.render(cameraVerts, self.faces32, normals, self.uvMap, diffuseTextures, specularTextures, torch.clamp(roughnessTextures, 1e-20, 10.0),self.vFocals[0], envMaps)
         # #cut link to backward
         # img = img.detach().cpu().numpy()
         # img = torch.tensor(img).to(self.device)
