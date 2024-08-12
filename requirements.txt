@@ -1,0 +1,13 @@
+opencv-python==4.10.0.84
+h5py==3.11.0
+torch==2.4.0
+torchmetrics==1.4.1
+torchvision==0.19.0
+polyscope==2.2.1
+matplotlib==3.9.1.post1
+drjit==0.4.6
+pillow==10.4.0
+tqdm==4.66.5
+numpy==2.0.1
+face-alignment==1.4.1
+mitsuba==3.5.2
