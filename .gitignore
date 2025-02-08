@@ -1,9 +1,9 @@
 .vscode/settings.json
 __pycache__/*
-output/*
 input/*
 baselMorphableModel/*
 faceNext/*
 drjit/*
 mitsuba/*
 *.pyc
+*.h5
